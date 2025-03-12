@@ -42,9 +42,9 @@ class ResultScreen extends StatelessWidget {
                 CircularPercentIndicator(
                   radius: 60.0,
                   lineWidth: 16.0,
-                  percent: percent(),
-                  center: Text("${(percent() * 100).toInt()}%"),
-                  progressColor: Colors.green,
+                  percent: percent / 100,
+                  center: Text("${(percent).toInt()}%"),
+                  progressColor: getColor,
                   backgroundWidth: 10,
                   animation: true,
                   circularStrokeCap: CircularStrokeCap.round,
@@ -196,7 +196,15 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
-  double percent() {
-    return correctAnswers.length / questionList.length;
+  double get percent {
+    return (correctAnswers.length * 100) / questionList.length;
+  }
+
+  Color get getColor {
+    return percent < 50
+        ? Colors.red
+        : percent < 90
+            ? Colors.orange
+            : Colors.green;
   }
 }
